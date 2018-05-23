@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.gamma.tarealabo7.Beans.Nota;
 
+import java.util.ArrayList;
+
 /**
  * Created by UCA on 17/05/2018.
  */
@@ -85,6 +87,28 @@ public class DBHelper extends SQLiteOpenHelper {
         return nota;
     }
 
+    public ArrayList<Nota> findGrades(){
+        ArrayList<Nota> notas = new ArrayList<>();
+
+        String[] campos ={ROW_ID,ROW_SUBJECT, ROW_PROFESSOR, ROW_GRADE};
+
+        try {
+            Cursor cursor = db.query(TABLE_GRADES, campos, null,null,
+                    null, null, null);
+            while (cursor.moveToNext()){
+                notas.add(new Nota(cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getDouble(3)));
+            }
+            cursor.close();
+
+        }catch (Exception e){
+            notas = null;
+        }
+        return notas;
+    }
+
     public boolean editGrade(String carnet, double nota){
         String[] parametros = {carnet};
         String[] campos = {ROW_GRADE};
@@ -95,11 +119,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    /*
-    public boolean deleteUser(String dui){
-        String[] args = {dui};
-        db.delete(TABLE_USER, ROW_ID+"=?",args);
+
+    public boolean deleteAll(){
+        db.delete(TABLE_GRADES, null,null);
         Toast.makeText(context, "Eliminado con exito", Toast.LENGTH_SHORT).show();
         return true;
-    }*/
+    }
 }
