@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.gamma.tarealabo7.Entity.DBHelper;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        DBHelper.getInstance(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -83,35 +85,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         Fragment fragment = null;
-        Class fragmentClass;
 
         switch (item.getItemId()){
             case R.id.nav_add:
-                fragmentClass = AddFragment.class;
+                fragment = new AddFragment();
                 break;
             case R.id.nav_update:
-                fragmentClass = AddFragment.class;
+                fragment = new UpdateFragment();
                 break;
             case R.id.nav_list:
-                fragmentClass = AddFragment.class;
-                break;
-            case R.id.nav_search:
-                fragmentClass = AddFragment.class;
+                fragment = null;
                 break;
             default:
-                fragmentClass = AddFragment.class;
+                fragment = null;
         }
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(fragment!=null){
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.content_main, fragment).commit();
         }
-
-        FragmentManager fm = getSupportFragmentManager();
-
-        fm.beginTransaction().replace(R.id.content_main, fragment).commit();
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

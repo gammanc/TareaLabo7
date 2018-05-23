@@ -50,11 +50,31 @@
             android:inputType="numberDecimal"/>
     </android.support.design.widget.TextInputLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"/>
+        style="?android:attr/buttonBarStyle"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_guardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Guardar"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:textColor="#fff"
+            android:layout_margin="4dp"/>
+        <Button
+            android:id="@+id/btn_limpiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Limpiar"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginTop="10dp"
+            android:layout_margin="4dp"/>
+
+    </LinearLayout>
 </LinearLayout>
